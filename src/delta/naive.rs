@@ -2,6 +2,7 @@ use crate::util::{
     bit_vec::BitVec,
     factorization::{Factorization, Pair},
 };
+use super::RowWalk;
 
 #[derive(Debug)]
 pub struct NaiveIterator {
@@ -30,7 +31,7 @@ impl NaiveIterator {
             h,
         }
     }
-    
+
     fn current_pair(&self) -> Option<Pair> {
         self.f.kth_pair(self.k)
     }
@@ -42,7 +43,6 @@ impl Iterator for NaiveIterator {
     fn next(&mut self) -> Option<usize> {
         match self.current_pair() {
             Some(p) => {
-
                 self.x += 1;
 
                 // Check if need to step up one row
@@ -56,14 +56,13 @@ impl Iterator for NaiveIterator {
 
                         // Check if went over pairs
                         if p.1 >= self.h {
-                            return None
+                            return None;
                         }
                     }
                 }
 
                 Some(self.x * self.y)
-
-            },
+            }
             None => None,
         }
     }

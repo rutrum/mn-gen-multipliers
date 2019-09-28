@@ -96,12 +96,46 @@ impl Factorization {
     }
 }
 
+impl IntoIterator for Factorization {
+    type Item = Pair;
+    type IntoIter = PairsWalk;
+
+    fn into_iter(self) -> PairsWalk {
+        PairsWalk {
+            pairs: self.pairs,
+            current: 0,
+        }
+    }
+}
+
+pub struct PairsWalk {
+    pairs: Vec<Pair>,
+    current: usize,
+}
+
+impl Iterator for PairsWalk {
+    type Item = Pair;
+
+    fn next(&mut self) -> Option<Pair> {
+        self.current += 1;
+        self.pairs.get(self.current - 1).copied()
+    }
+}
+
 #[cfg(test)]
 mod test {
 
     use super::*;
 
-    // Confirms that a factorization is valid
+    /// Confirms that the iterator is working
+    #[test]
+    fn iterate_over_pairs() {
+        let f = Factorization::new(24);
+        let iter = f.into_iter();
+        assert_eq!(4, iter.count());
+    }
+
+    /// Confirms that a factorization is valid
     #[test]
     fn validate_factorization() {
         let ns = vec![1, 10, 25, 41, 540, 100_000, 123_123, 5_040];
@@ -113,7 +147,7 @@ mod test {
 
     /// Tests that creating factorizations within an interval is valid.
     #[test]
-    fn create_interval_of_factorizations() {
+    fn create_interval() {
         let sizes = vec![(500, 600), (1, 5000), (1234, 12345)];
         for (a, b) in sizes {
             let fs = Factorization::in_range(a, b);
