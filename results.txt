@@ -1,0 +1,15 @@
+Total products under 2^6: 618
+Total products under 2^7: 2563
+Total products under 2^8: 10469
+Total products under 2^9: 39634
+Total products under 2^10: 143899
+Total products under 2^11: 525180
+Total products under 2^12: 1881831
+Total products under 2^13: 6666154
+Total products under 2^14: 23421530
+Total products under 2^15: 81737275
+Total products under 2^16: 284944133
+Total products under 2^17: 988002629
+Total products under 2^18: 3410624078
+Total products under 2^19: 11736262826
+Total products under 2^20: 40349944380

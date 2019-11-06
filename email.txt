@@ -1,0 +1,55 @@
+For algorithm 2 - naive version, get a count of number of product created to compute M(n) for, say, n being powers of 2 (data on this for a wheel modulus would also be nice).
+
+Compare this to the number of products constructed using algorithm 3 for the same n values.  
+
+For algorithm 3, choose multipliers by starting at n and working down, always choosing the least such multiplier that successfully computes delta of that value. 
+
+Jonathan
+
+----
+
+Here is an extended example of how I imagine Algorithm 3 could work  for computing M(100).
+
+Initialize an array of length 100 to -1.  Initialize another array of length 100 of a sieve of Eratosthenes to read off factor information.
+
+Start at 100 find the smallest multiplier that correctly computes delta(100) which is m = 20.  Output this multiplier to a file so we know it was used in case we want that information later.  Use algorithm 3 to compute and store delta values for 20, 40, 60, 80, and 100.
+
+Find the next array position with a -1, which is now 99.  Choose the smallest multiplier that computes delta(99) which is m = 9.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 9, 18, 27, 45, 63, 81, and 99.
+
+Find the next array position with a -1 which is now 98.  Choose the smallest multiplier that computes delta(98) which is m = 14.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 14, 28, 42, 56, 70, and 98.
+
+Find the next array position with a -1 which is 97.  Choose the smallest multiplier that computes delta(97) which is m = 1.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, and 97.
+
+Find the next array position with a -1 which is 96. Choose the smallest multiplier that computes delta(96) which is m = 12.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 12, 24, 36, 48, 60, 84, and 96.
+
+Find the next array position with a -1 which is 95.  Choose the smallest multiplier that computes delta(95) which is m = 5.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 5, 10, 15, 25, 35, 55, 65, 85, 95.
+
+Find the next array position with a -1 which is 94.  Choose the smallest multiplier that computes delta(94) which is m = 2.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 2, 4, 6, 8, 10, 14, 22, 26, 34, 38, 46, 58, 62, 74, 82, 86, and 94.
+
+Find the next array position with a -1 which is 93.  Choose the smallest multiplier that computes delta(93) which is m = 3.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 3, 6, 9, 15, 21, 33, 39, 51, 57, 69, 81, 87, and 93.
+
+Find the next array position with a -1 which is 92.  Choose the smallest multiplier that computes delta(92) which is m = 4.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 4, 8, 12, 16, 20, 28, 32, 44, 52, 68, 76, and 92.
+
+Find the next array position with a -1 which is 91.  Choose the smallest multiplier that computes delta(91) which is m = 7.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 7, 14, 21, 35, 49, 77, 91.
+
+Find the next array position with a -1 which is 90.  Choose the smallest multiplier that computes delta(90) which is m = 18.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 18, 36, 54,  72, and 90.
+
+Find the next array position with a -1 which is 88.  Choose the smallest multiplier that compute delta(88) which is m = 8.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 8, 16, 24, 32, 40, 56, 64, and 88.
+
+Find the next array position with a -1 which is 80.  Choose the smallest multiplier that computes delta(80) which is m = 20.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 20, 40, 60, and 80.
+
+Find the next array position with a -1 which is 78.  Choose the smallest multiplier that computes delta(78) which is m = 6.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 6, 12, 18, 24, 30, 42, 54, 66, and 78.
+
+Find the next array position with a -1 which is 75.  Choose the smallest multiplier that computes delta(75) which is m = 15.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 15, 30, 45, and 75.  
+
+Find the next array position with a -1 which is 50.  Choose the smallest multiplier that computes delta(50) which is m = 10.  Record this multiplier.  Invoke algorithm 3 to compute and store delta values for 10, 20, 30, 40, and 50.  
+
+Find the next array position with a -1 which... does not exist.  Compute a running sum (n -delta(n))  of the elements to tabulate M(1) through M(100).
+
+Jonathan
+
+----
+
+Oh! You *can* initialize to 0.  Record k -delta(k) rather than delta(k). 
+
+Jonathan

@@ -1,0 +1,36 @@
+    14 multipliers2pow6.txt
+    23 multipliers2pow7.txt
+    37 multipliers2pow8.txt
+    58 multipliers2pow9.txt
+    90 multipliers2pow10.txt
+   143 multipliers2pow11.txt
+   225 multipliers2pow12.txt
+   355 multipliers2pow13.txt
+   563 multipliers2pow14.txt
+   894 multipliers2pow15.txt
+  1426 multipliers2pow16.txt
+  2277 multipliers2pow17.txt
+  3643 multipliers2pow18.txt
+  5839 multipliers2pow19.txt
+  9398 multipliers2pow20.txt
+ 15155 multipliers2pow21.txt
+
+Total products under 1: 0
+Total products under 2: 0
+Total products under 4: 1
+Total products under 8: 6
+Total products under 16: 43
+Total products under 32: 222
+Total products under 64: 1165
+Total products under 128: 5765
+Total products under 256: 27617
+Total products under 512: 127663
+Total products under 1024: 581273
+Total products under 2048: 2605379
+Total products under 4096: 11532765
+Total products under 8192: 50449811
+Total products under 16384: 218894481
+Total products under 32768: 943018144
+Total products under 65536: 4038401822
+Total products under 131072: 17203331841
+Total products under 262144: 72957849823

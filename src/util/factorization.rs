@@ -94,6 +94,24 @@ impl Factorization {
     pub fn total_pairs(&self) -> usize {
         self.pairs.len()
     }
+
+    pub fn greatest_prime_divisor(&self) -> usize {
+        use crate::util::is_prime;
+
+        for i in self.pairs.iter() {
+            let h = i.0;
+            if is_prime(h) {
+                return h;
+            }
+        }
+        for i in self.pairs.iter().rev() {
+            let h = i.1;
+            if is_prime(h) {
+                return h;
+            }
+        }
+        return 1;
+    }
 }
 
 impl IntoIterator for Factorization {
@@ -108,6 +126,7 @@ impl IntoIterator for Factorization {
     }
 }
 
+#[derive(Debug)]
 pub struct PairsWalk {
     pairs: Vec<Pair>,
     current: usize,
@@ -186,5 +205,16 @@ mod test {
     /// Asserts that Pair.0 is less than or equal to Pair.1
     fn ordered_pair(p: Pair) {
         assert!(p.0 >= p.1);
+    }
+
+    #[test]
+    fn confirm_greatest_prime() {
+        let ns = vec![100, 49, 512, 247];
+        let ps = vec![5, 7, 2, 19];
+        for (&n, &p) in ns.iter().zip(ps.iter()) {
+            let f = Factorization::new(n);
+            assert_eq!(p, f.greatest_prime_divisor());
+        }
+
     }
 }

@@ -1,16 +1,15 @@
 use crate::util::{
     bit_vec::BitVec,
-    factorization::{Factorization, Pair},
+    factorization::{Factorization, Pair, PairsWalk},
 };
 use super::RowWalk;
 
 #[derive(Debug)]
 pub struct NaiveIterator {
-    k: usize,
-    x: usize,
+    pwalk: PairsWalk,
+    cur_pair: Option<Pair>,
+    rwalk: RowWalk,
     y: usize,
-    f: Factorization,
-    h: usize,
 }
 
 impl NaiveIterator {
@@ -22,51 +21,55 @@ impl NaiveIterator {
 
     /// Creates a new naive iterator over the given factorization
     pub fn over(f: Factorization) -> NaiveIterator {
-        let h = f.last_pair().1;
+        let pwalk = f.into_iter();
+        let rwalk = RowWalk::from(0, 0); // Dummy walk to get through (1, n)
         NaiveIterator {
-            k: 1,
-            x: 0,
-            y: 1,
-            f,
-            h,
-        }
-    }
-
-    fn current_pair(&self) -> Option<Pair> {
-        self.f.kth_pair(self.k)
-    }
-}
-
-impl Iterator for NaiveIterator {
-    type Item = usize;
-
-    fn next(&mut self) -> Option<usize> {
-        match self.current_pair() {
-            Some(p) => {
-                self.x += 1;
-
-                // Check if need to step up one row
-                if self.x >= p.0 {
-                    self.y += 1;
-                    self.x = self.y;
-
-                    // Check if need to advance to next pair
-                    if self.y >= p.1 {
-                        self.k += 1;
-
-                        // Check if went over pairs
-                        if p.1 >= self.h {
-                            return None;
-                        }
-                    }
-                }
-
-                Some(self.x * self.y)
-            }
-            None => None,
+            pwalk,
+            cur_pair: pwalk.next(),
+            rwalk,
+            y: 0,
         }
     }
 }
+
+// impl Iterator for NaiveIterator {
+//     type Item = usize;
+
+//     fn next(&mut self) -> Option<usize> {
+        
+//         match self.cur_pair {
+//             Some(pair) => {
+//                 match self.rwalk.next() {
+//                     Some(product) => Some(product),
+//                     None => {
+//                         // Go to next row
+//                         self.y += 1;
+//                     }
+//                 }
+//                 self.x += 1;
+
+//                 // Check if need to step up one row
+//                 if self.x >= p.0 {
+//                     self.y += 1;
+//                     self.x = self.y;
+
+//                     // Check if need to advance to next pair
+//                     if self.y >= p.1 {
+//                         self.k += 1;
+
+//                         // Check if went over pairs
+//                         if p.1 >= self.h {
+//                             return None;
+//                         }
+//                     }
+//                 }
+
+//                 Some(self.x * self.y)
+//             }
+//             None => None,
+//         }
+//     }
+// }
 
 #[cfg(test)]
 mod test {
