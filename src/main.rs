@@ -39,7 +39,7 @@ fn total_products_mod0(f: &Factorization) -> usize {
 }
 
 fn write_out_multipliers() {
-    for power in 22..=22 {
+    for power in 0..=5 {
         let mut total_products = 0;
 
         let ub = 2_usize.pow(power);
