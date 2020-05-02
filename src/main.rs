@@ -1,26 +1,53 @@
 mod util;
 use util::factorization::Factorization;
 use util::least_multiplier;
+use util::sieve::Sieve;
 use std::fs::File;
 use std::io::prelude::*;
 
 fn main() {
-    // let n = 300000;
-    // let f = Factorization::new(n);
-    // println!("{:?}", f.pairs);
-    // println!("{}", total_products_mod0(&f));
-    write_out_multipliers();
+    let ub = 100; //2_usize.pow(30);
+    let mut covered = vec![false; ub + 1];
+    let mut multipliers = Vec::new();
 
-    // let mut total = 0;
-    // let mut power = 1;
-    // for i in 1.. {
-    //     let f = Factorization::new(i);
-    //     total += total_products_mod0(&f);
-    //     if i == power {
-    //         println!("Total products under {}: {}", i, total);
-    //         power *= 2;
-    //     }
-    // }
+    let sieve = Sieve::up_to(ub);
+    let primes = sieve.to_primes();
+    
+    for n in (1..=ub).rev() {
+        if !covered[n] {
+
+            //let f = Factorization::new(n);
+            //let m = least_multiplier(f);
+
+            let m = n / sieve.highest_prime_divisor(n);
+
+            /*
+            let p = primes.iter()
+                .rev()
+                .skip_while(|&p| p * p > n)
+                .find(|&p| n % p == 0)
+                .unwrap_or(&1);
+
+            let m = n / p;
+            */
+
+            // println!("n:{}\tm:{}", n, m);
+
+            multipliers.push(m);
+            primes.iter()
+                .map(|p| p * m)
+                .take_while(|&x| x <= ub)
+                .for_each(|x| {
+                    covered[x] = true;
+                });
+        }
+    }
+
+    // println!("all covered: {:?}", covered.iter().skip(1).all(|x| *x));
+    
+    println!("{:?}", multipliers.len());
+    // for m in multipliers { println!("{}", m); }
+    
 }
 
 fn total_products_mod0(f: &Factorization) -> usize {

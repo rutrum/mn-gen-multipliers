@@ -1,5 +1,6 @@
 pub mod bit_vec;
 pub mod factorization;
+pub mod sieve;
 
 use factorization::Factorization;
 
