@@ -11,14 +11,14 @@ fn main() {
     let mut multipliers = Vec::new();
 
     let sieve = Sieve::up_to(ub);
-    //let primes = sieve.to_primes();
     
     for n in (1..=ub) {
         if !covered[n] {
 
-            let m = n / sieve.highest_prime_divisor(n);
+            let p = sieve.highest_prime_divisor(n);
+            let m = n / p;
 
-            multipliers.push(m);
+            multipliers.push((m, p));
 
             /*
             (1..=ub)
@@ -32,8 +32,6 @@ fn main() {
             
             (1..=ub/m)
                 .filter(|&c| sieve.is_prime(c))
-                //.map(|c| c * m)
-                //.take_while(|&x| x <= ub)
                 .for_each(|x| {
                     covered[x * m] = true;
                 });
@@ -42,8 +40,9 @@ fn main() {
 
     //println!("all covered: {:?}", covered.iter().skip(1).all(|x| *x));
     
-    // println!("{:?}", multipliers.len());
-    for m in multipliers { println!("{}", m); }
+    for (m, p) in multipliers { 
+        println!("{} {}", m, p); 
+    }
     
 }
 
