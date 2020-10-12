@@ -13,13 +13,14 @@ fn main() {
     let sieve = Sieve::up_to(ub);
     //let primes = sieve.to_primes();
     
-    for n in (1..=ub).rev() {
+    for n in (1..=ub) {
         if !covered[n] {
 
             let m = n / sieve.highest_prime_divisor(n);
 
             multipliers.push(m);
 
+            /*
             (1..=ub)
                 .filter(|&c| sieve.is_prime(c))
                 .map(|c| c * m)
@@ -27,6 +28,7 @@ fn main() {
                 .for_each(|x| {
                     covered[x] = true;
                 });
+            */
             
             (1..=ub/m)
                 .filter(|&c| sieve.is_prime(c))
